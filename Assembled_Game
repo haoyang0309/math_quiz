@@ -1,36 +1,58 @@
 import random
+# loop game
 keep_going = ""
 while keep_going == "":
-  Instructions = ""
-  YN = ["yes", "no"]
-  while Instructions != YN:
-    Instructions = input("Would you like to read the instructions? ")
-    try:
-      if Instructions == "yes":
-        print("")
-        print("Enter the maximum number, minimum number and arithmetic.")
-        print("The system will randomize the number between the maximum and minimum numbers you choose and the arithmetic you choose.")
-        print("Enter the number of rounds you want to play and you can start your game.") 
-        print("Score mechanics will be displayed at the end of the game. ")
-        print("If you want to play again, you can press the <Enter> at the end of the game to loop the game.")
-        print("")
-        print("(If the arithmetic you choose is division, just enter the result and round to the nearest integer.)")
-        print("")
-        print("Have fun!")
-        print("")  
-        break    
-      elif Instructions == "no":
-        print("")
-        print("Let's start the game, have fun!")
-        print("")
-        break
-      else:
-        print("please enter 'yes' or 'no'")
-        continue
-    except ValueError:
+  
+  # Checks user input (either full word or first letter of word)
+  def string_checker(question, to_check):
+    
+    valid = False
+    while not valid:
+      # ask user question and change response to lowercase
+      response = input(question).lower()
+
+      if response == "xxx":
+        return response
+
+      # check response is in list OR that it's the first letter of an item in the list
+      for item in to_check:
+        if response == item:
+          return response
+        elif response == item[0]:
+          return item
+
+      # if item not in list, print error
       print("please enter 'yes' or 'no'")
+
+  # the instructions
+  def instructions():
+
+    instructions = string_checker("Would you like to read the instructions? ", ["yes", "no"])
+    # Users don’t want to read instructions
+    if instructions == "no":
+      print("")
+      print("Let's start the game, have fun!")
+      print("")
+    # User wants to read instructions
+    else:
+      print("")
+      print("Enter the maximum number, minimum number and arithmetic.")
+      print("The system will randomize the number between the maximum and minimum numbers you choose and the arithmetic you choose.")
+      print("Enter the number of rounds you want to play and you can start your game.") 
+      print("Score mechanics will be displayed at the end of the game. ")
+      print("If you want to play again, you can press the <Enter> at the end of the game to loop the game.")
+      print("")
+      print("(If the algorithm is division, the quotient and divisor will be the number between the minimum and maximum selected by you.)")
+      print("")
+      print("Have fun!")
+      print("")  
+  instructions()
+  # set correct score and wrong score (the x and y is correct score and wrong score)
   x = 0
   y = 0
+  # set game history
+  game_history = []
+  # Functions go here
   def intcheck(question, low=None, high=None):
 
       # sets up error messages
@@ -74,6 +96,7 @@ while keep_going == "":
   highest = intcheck("what's the largest number you want to choice? ", lowest + 1)
   algorithm = intcheck("what's the algorithm you want to choice?"
                         "[ + - (1)   x / (2)   random(3) ", 1, 3)
+  # How many games want to play
   b = 1
   games = ""
   counter = 0
@@ -92,7 +115,7 @@ while keep_going == "":
       except ValueError:
           print("please enter an integer more than 0")
           continue
-
+ # Set algorithms and numbers random
   answer = ""
   while counter <= games - 1:
       print("Round {} of {} ".format(counter + 1, games))
@@ -104,6 +127,7 @@ while keep_going == "":
           algorithm_random = random.choice(algorithm3)
       num_1 = int(random.randint(lowest, highest))
       num_2 = int(random.randint(lowest, highest))
+      D = num_1 * num_2
       if algorithm_random == "+":
           A = num_1 + num_2
       elif algorithm_random == "-":
@@ -111,41 +135,64 @@ while keep_going == "":
       elif algorithm_random == "*":
           A = num_1 * num_2
       elif algorithm_random == "/":
-          A = num_1 / num_2
+          A = D / num_1
       a = round(A)
+      #set question
       while answer != a:
-          try:
+        try:
+            if algorithm_random == "+":
               answer = int(input("{} {} {} = ".format(num_1, algorithm_random, num_2)))
+            elif algorithm_random == "-":
+              answer = int(input("{} {} {} = ".format(num_1, algorithm_random, num_2)))
+            elif algorithm_random == "*":
+              answer = int(input("{} {} {} = ".format(num_1, algorithm_random, num_2)))
+            elif algorithm_random == "/":
+              answer = int(input("{} {} {} = ".format(D, algorithm_random, num_1)))
 
-              if answer == a:
-                  print("Correct, well done")
-                  print("")
-                  counter += 1
-                  x += 1
-                  continue
-              elif answer < a:
-                  print("Answer wrong, the correct answer is {}".format(a))
-                  print("")
-                  counter += 1
-                  y += 1
-                  break
-              elif answer > a:
-                  print("Answer wrong, the correct answer is {}".format(a))
-                  print("")
-                  counter += 1
-                  y += 1
-                  break
-              else:
-                  print("please enter an integer")
+            if answer == a:
+                print("Correct, well done")
+                print("")
+                counter += 1
+                x += 1
+                feedback = "correct"
+                continue
+            elif answer < a:
+                print("Answer wrong, the correct answer is {}".format(a))
+                print("")
+                counter += 1
+                y += 1
+                feedback = "wrong"
+                break
+            elif answer > a:
+                print("Answer wrong, the correct answer is {}".format(a))
+                print("")
+                counter += 1
+                y += 1
+                feedback = "wrong"
+                break
+            # sets up error messages
+            else:
+                print("please enter an integer")
 
-          except ValueError:
-              print("please enter an integer")
-              continue
+        except ValueError:
+            print("please enter an integer")
+            continue
+      #game history
+      round_result = "Round {}: {}".format(counter, feedback)
+      game_history.append(round_result)
+  # Percentage of win
   B = x / games * 100
   print("")
+  # print game history
+  print("**** Game History ****")
+  for item in game_history:
+   print(item)
+  print("")
+  # End game summary
   print("***************** End Game Summary *****************")
   print(" correct: {}  |  wrong: {}  |  Correct rate: {}% ".format(x, y, B))
   print("****************************************************")
   print("")
+  #keep going, loop game
   keep_going = input("Press <enter> to play again or any key to quit: ")
 print("Thank you for playing.  Good bye")

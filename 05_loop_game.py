@@ -1,5 +1,7 @@
+#loop game
 keep_going = ""
 while keep_going == "":
+    # How many games want to play
     b = 1
     games = ""
     counter = 0
@@ -9,6 +11,7 @@ while keep_going == "":
 
             if games >= b:
                 break
+            # sets up error messages
             elif games < b:
                 print("please enter an integer more than 0")
             else:
@@ -19,6 +22,7 @@ while keep_going == "":
             continue
     c = 1
     user_answer = ""
+    #set question
     while counter <= games - 1:
         print("Round {} of {} ".format(counter + 1, games))
         try:
@@ -26,6 +30,7 @@ while keep_going == "":
 
             if user_answer >= c:
                 counter += 1
+            # sets up error messages
             elif user_answer < c:
                 print("please enter an integer more than 0")
             else:

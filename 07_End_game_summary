@@ -4,11 +4,6 @@ correct = 0
 wrong = 0
 game_history = []
 
-#print()
-#print("******* World's Lamest Game *******")
-#print("Type in 'correct to win, or anything else to lose a round")
-#print()
-
 for item in range(1, how_many + 1):
 
   result = input("choose result: ")
@@ -19,15 +14,18 @@ for item in range(1, how_many + 1):
   else:
     feedback = "wrong"
     wrong += 1
+  #game history
   round_result = "Round {}: {}".format(item, feedback)
   game_history.append(round_result)
 
 print ()
 print ("**** Results ****")
-
+# print game history
 for item in game_history:
   print(item)
+# Percentage of win
 B = correct / how_many * 100
 print ()
+# End game summary
 print ("******** Game Statistics ********")
 print("correct: {}  |  wrong: {}  |  Correct rate: {}% ".format(correct, wrong, B))

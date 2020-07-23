@@ -1,8 +1,11 @@
 import random
+# loop game
 keep_going = ""
 while keep_going == "":
+   # set correct score and wrong score
     x = 0
     y = 0
+    # Functions go here
     def intcheck(question, low=None, high=None):
 
         # sets up error messages
@@ -46,6 +49,7 @@ while keep_going == "":
     highest = intcheck("what's the largest number you want to choice? ", lowest + 1)
     algorithm = intcheck("what's the algorithm you want to choice?"
                          "[ + - (1)   x / (2)   random(3) ", 1, 3)
+    # How many games want to play
     b = 1
     games = ""
     counter = 0
@@ -56,6 +60,7 @@ while keep_going == "":
 
             if games >= b:
                 break
+            # sets up error messages
             elif games < b:
                 print("please enter an integer more than 0")
             else:
@@ -64,8 +69,9 @@ while keep_going == "":
         except ValueError:
             print("please enter an integer more than 0")
             continue
-
+    
     answer = ""
+    # Set algorithms and numbers random
     while counter <= games - 1:
         print("Round {} of {} ".format(counter + 1, games))
         if algorithm == 1:
@@ -85,6 +91,7 @@ while keep_going == "":
         elif algorithm_random == "/":
             A = num_1 / num_2
         a = round(A)
+        #set question
         while answer != a:
             try:
                 answer = int(input("{} {} {} = ".format(num_1, algorithm_random, num_2)))
@@ -107,12 +114,14 @@ while keep_going == "":
                     counter += 1
                     y += 1
                     break
+                # sets up error messages
                 else:
                     print("please enter an integer")
 
             except ValueError:
                 print("please enter an integer")
                 continue
+    #score mechanics
     print("")
     print("***** End Game Summary *****")
     print(" Correct: {}  |   Wrong: {} ".format(x, y))

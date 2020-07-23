@@ -39,6 +39,7 @@ algorithm3 = ["+","-","x","/"]
 
 lowest = intcheck("what's the smallest number you want to choice?: ",  )
 highest = intcheck("what's the largest number you want to choice? ", lowest + 1)
+# Set algorithms and numbers random
 for item in range(0, 20):
   number_random = random.randint(lowest, highest)
   print(number_random, end="\t")

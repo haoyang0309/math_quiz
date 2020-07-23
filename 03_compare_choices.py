@@ -43,6 +43,7 @@ num_1 = int(random.randint(lowest, highest))
 num_2 = int(random.randint(lowest, highest))
 a = num_1 + num_2
 answer = ""
+#set question
 while answer != a:
     try:
         answer = int(input("{} + {} = ".format(num_1, num_2)))
@@ -56,6 +57,7 @@ while answer != a:
         elif answer > a:
             print("Answer wrong, the correct answer is {}".format(a))
             break
+        # sets up error messages
         else:
             print("please enter an integer")
 
